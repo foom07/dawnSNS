@@ -2,7 +2,7 @@
 
 @section('content')
 
-{!! Form::open() !!}
+{!! Form::open(['method' => 'get', 'action' => 'PostsController@index']) !!}
 
 <p>DAWNSNSへようこそ</p>
 

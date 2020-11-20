@@ -17,10 +17,10 @@ class CreatePostsTable extends Migration
             $table->increments('id')->autoIncrement();
             $table->integer('user_id');
 
-            $table->foreign('user_id')->references('id')->on('users');
+            // $table->foreign('user_id')->references('id')->on('users');
 
             $table->string('posts',500);
-            $$table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
             $table->timestamp('modified_at')->default(DB::raw('CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP'));
         });
     }
