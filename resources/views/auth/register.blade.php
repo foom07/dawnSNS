@@ -2,9 +2,19 @@
 
 @section('content')
 
-{!! Form::open() !!}
+{!! Form::open(['action' => 'Auth\RegisterController@register']) !!}
 
 <h2>新規ユーザー登録</h2>
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
 {{ Form::label('ユーザー名') }}
 {{ Form::text('username',null,['class' => 'input']) }}
@@ -16,7 +26,7 @@
 {{ Form::text('password',null,['class' => 'input']) }}
 
 {{ Form::label('パスワード確認') }}
-{{ Form::text('password-confirm',null,['class' => 'input']) }}
+{{ Form::text('password_confirmation',null,['class' => 'input']) }}
 
 {{ Form::submit('登録') }}
 

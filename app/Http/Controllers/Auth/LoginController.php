@@ -27,7 +27,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/top';
 
     /**
      * Create a new controller instance.
@@ -38,16 +38,20 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
-    
+
     public function login(Request $request){
         if($request->isMethod('post')){
-            
             $data=$request->only('mail','password');
+            // var_dump($data['mail']);
             // ログインが成功したら、トップページへ
             //↓ログイン条件は公開時には消すこと
-            if(Auth::attempt($data)){
-                return redirect('/top');
+            if(Auth::attempt(['mail' => $data['mail'], 'password' => $data['password']])){
+            // if(Auth::attempt($data)){
+                // var_dump($data);
+                // return view('posts.index');
             }
+            // var_dump($data);
+            return view('posts.index');
         }
         return view("auth.login");
     }
