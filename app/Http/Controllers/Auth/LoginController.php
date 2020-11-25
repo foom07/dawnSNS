@@ -45,13 +45,13 @@ class LoginController extends Controller
             // var_dump($data['mail']);
             // ログインが成功したら、トップページへ
             //↓ログイン条件は公開時には消すこと
-            if(Auth::attempt(['mail' => $data['mail'], 'password' => $data['password']])){
-            // if(Auth::attempt($data)){
-                // var_dump($data);
-                // return view('posts.index');
+            // if(Auth::attempt(['mail' => $data['mail'], 'password' => $data['password']])){
+            if(Auth::attempt($data)){
+                var_dump($data);
+                return view('posts.index');
             }
             // var_dump($data);
-            return view('posts.index');
+            // return view('posts.index');
         }
         return view("auth.login");
     }
