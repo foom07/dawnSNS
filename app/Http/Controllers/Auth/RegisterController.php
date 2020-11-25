@@ -66,7 +66,7 @@ class RegisterController extends Controller
         return User::create([
             'username' => $data['username'],
             'mail' => $data['mail'],
-            'password' => bcrypt($data['password']),
+            'password' => $data['password'],
         ]);
     }
 
@@ -77,10 +77,19 @@ class RegisterController extends Controller
 
     public function register(Request $request){
         if($request->isMethod('post')){
-            $data = $request->input();
+
+            $request->validate([
+                'username' => 'required|string|max:255',
+                'mail' => 'required|string|email|max:255|unique:users',
+                'password' => 'required|string|min:4|confirmed',
+                'password_confirmation' => 'required',
+            ]);
+
+            $data = $request->all();
 
             $this->create($data);
-            return redirect('added');
+            $username = $request->username;
+            return view('auth.added', ['username' => $username,]);
         }
         return view('auth.register');
     }
