@@ -22,7 +22,11 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
+    // use AuthenticatesUsers;
+    // ログアウト処理変更
+    use AuthenticatesUsers {
+        logout as performLogout;
+    }
 
     /**
      * Where to redirect users after login.
@@ -70,5 +74,13 @@ class LoginController extends Controller
             return view("auth.login");
         }
         return view("auth.login");
+    }
+
+    // logout処理変更
+    public function logout(Request $request)
+    {
+        $this->performLogout($request);
+        session()->flash('message', 'ログアウトしました');
+        return redirect('login');
     }
 }
