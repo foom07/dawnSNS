@@ -2,9 +2,25 @@
 
 @section('content')
 
-{!! Form::open(['action' => 'Auth\LoginController@login']) !!}
+{!! Form::open() !!}
 
 <p>DAWNSNSへようこそ</p>
+
+@if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
+@if(session('message'))
+  <div class="alert alert-danger">
+      {{session('message')}}
+  </div>
+@endif
 
 {{ Form::label('e-mail') }}
 {{ Form::text('mail',null,['class' => 'input']) }}

@@ -2,7 +2,7 @@
 
 @section('content')
 
-{!! Form::open(['action' => 'Auth\RegisterController@register']) !!}
+{!! Form::open() !!}
 
 <h2>新規ユーザー登録</h2>
 

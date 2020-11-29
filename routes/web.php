@@ -16,7 +16,7 @@
 // });
 // Route::get('/home', 'HomeController@index')->name('home');
 
-Auth::routes();
+//Auth::routes();
 
 
 //ログアウト中のページ
@@ -30,7 +30,8 @@ Route::get('/added', 'Auth\RegisterController@added');
 
 
 //ログイン中のページ
-// Route::group(['middleware' => 'auth'], function() {
+
+Route::group(['middleware' => 'auth'], function() {
 
   Route::get('/top','PostsController@index');
 
@@ -41,9 +42,10 @@ Route::get('/added', 'Auth\RegisterController@added');
   Route::get('/follow-list','PostsController@index');
   Route::get('/follower-list','PostsController@index');
 
-// });
+});
 
 
-// Auth::routes();
+
+Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

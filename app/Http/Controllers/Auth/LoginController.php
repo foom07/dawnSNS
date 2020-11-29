@@ -7,6 +7,8 @@ use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Auth;
 
+use Illuminate\Support\Facades\Validator;
+
 class LoginController extends Controller
 {
     /*
@@ -27,7 +29,7 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/top';
+    protected $redirectTo = '/home';
 
     /**
      * Create a new controller instance.
@@ -39,19 +41,33 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'mail' => 'required|string|email|max:255',
+            'password' => 'required|string|min:4',
+        ]);
+    }
+
     public function login(Request $request){
         if($request->isMethod('post')){
+
             $data=$request->only('mail','password');
-            // var_dump($data['mail']);
+
+            $validator = $this->validator($data);
+            if ($validator->fails()) {
+                return redirect('login')
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+
             // ログインが成功したら、トップページへ
             //↓ログイン条件は公開時には消すこと
-            // if(Auth::attempt(['mail' => $data['mail'], 'password' => $data['password']])){
             if(Auth::attempt($data)){
-                var_dump($data);
-                return view('posts.index');
+                return redirect('/top');
             }
-            // var_dump($data);
-            // return view('posts.index');
+            session()->flash('message', 'ログイン失敗');
+            return view("auth.login");
         }
         return view("auth.login");
     }
